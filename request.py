@@ -16,7 +16,6 @@ def get_data(max_num):
         data = response.read()
         words = data.split(',',31)
         for word in words:
-            print word
             store(words)
         counter+= 1
         
@@ -66,10 +65,10 @@ def main():
    if time_now[0] >= '09' and  time_now[0] <= '11':
 	if time_now[1] >= '15': 
            print 'Morning Session'
-	   get_data(max_num)
+	   #get_data(max_num)
    elif time[0] >= '13' and time_now[0] <= '15':
       print "Afternoon Session"
-      get_data(max_num)
+      #get_data(max_num)
    else:
       print "Not time to get data"
     #  get_data(max_num)
