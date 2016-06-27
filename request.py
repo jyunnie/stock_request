@@ -2,14 +2,24 @@
 import urllib
 import urllib2
 import MySQLdb
-import mysql.connector
+import datetime
+import time
+#import mysql.connector
 autoincrement_id = 0
 
-def get_data(stock_number):
-    req = urllib2.Request('http://hq.sinajs.cn/list=sh'+stock_number)
-    response = urllib2.urlopen(req)
-    data = response.read()
-    words = data.split(',',31)
+def get_data(max_num):
+    counter =0
+    for x in range(max_num):
+        stock_number = '601%03d' % counter
+        req = urllib2.Request('http://hq.sinajs.cn/list=sh'+stock_number)
+        response = urllib2.urlopen(req)
+        data = response.read()
+        words = data.split(',',31)
+        for word in words:
+            print word
+            store(words)
+        counter+= 1
+        
 
 def store(words):
     result = dict()
@@ -49,13 +59,25 @@ def store(words):
     autoincrement_id += 1
     yield result
 
-def stock_num_cal():
-    base = 601000
-    for x in range(101):
-        base += 1
-        store[x] = base
-    return store
+def main():
+   max_num = 101
+   time_now=time.strftime("%H %M %S").split()
+   print time_now
+   if time_now[0] >= '09' and  time_now[0] <= '11':
+	if time_now[1] >= '15': 
+           print 'Morning Session'
+	   get_data(max_num)
+   elif time[0] >= '13' and time_now[0] <= '15':
+      print "Afternoon Session"
+      get_data(max_num)
+   else:
+      print "Not time to get data"
+    #  get_data(max_num)
+   
+  
 #seq = 'http://hq.sinajs.cn/list=sh601006'
 #for x in range[1,10]:
 #	seq += 1
 #	print seq
+
+main()
