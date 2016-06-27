@@ -1,0 +1,15 @@
+# -*- coding:utf-8 -*-
+import urllib
+import urllib2
+import MySQLdb
+
+
+req = urllib2.Request('http://hq.sinajs.cn/list=sh601006')
+response = urllib2.urlopen(req)
+data = response.read()
+words = data.split(',',31)
+for word in words:
+	print(word)
+result = dict()
+result['stock_name'] = words[0]
+print result['stock_name']
