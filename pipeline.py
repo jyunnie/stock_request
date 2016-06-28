@@ -1,0 +1,40 @@
+import MySQLdb.cursors
+import os
+import json
+import logging
+
+class MySQLPipeline(object):
+      @classmethod
+      def __init__(self,stats):
+          with open(os.getcwd()+'db_config.json') as database_file:
+		try:
+		    db_config = json.load(database_file)
+		    logging.info("Loaded config to pipeline %s" % db_config)
+		except:
+		    logging.error("Error loading db config in pipeline")
+	  self.dbpool = adbapi.ConnectionPool(
+		'MySQLdb',
+		host = db_config['DB_HOST'],
+		user = db_config['DB_USER'],
+		passwd = db_config['DB_PASSWD'],
+		port = db_config['DB_PORT'],
+		db = db_config['DB_DB'],
+		charset = 'utf-8',
+		use_unicode = True,
+		cursorclass=MySQLdb.cursors.DictCursor
+	   )
+	   self.stats=stats
+	   dispatcher.connect(self.store_closed,signals.store_closed)
+
+       def store_closed(self):
+	   self.dbpool.close()
+       
+       def process_item(self,item):
+	   if item:
+             query = self.dbpool.runInteraction(self._insert_record,item)
+	   return item
+
+       def _insert_record(self,tx,item):
+	   if not tx.execute(#insert SQL command here(tables) eg. SELECT (1) FROM stock_price WHERE url=%s
+		  tx.execute(item['stocks and bla bla bla'],item['more goes in here'])
+	   self.stats.inc_value('database/items_added')

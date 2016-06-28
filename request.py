@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import urllib
 import urllib2
-import MySQLdb
 import datetime
 import time
 #import mysql.connector
